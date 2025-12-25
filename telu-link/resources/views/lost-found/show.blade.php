@@ -30,60 +30,69 @@
 
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white rounded-lg shadow-md p-8">
-                <div class="flex items-center gap-3 mb-6">
-                    <span
-                        class="px-4 py-2 text-sm font-semibold rounded-full {{ $lostFound->status == 'hilang' ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
-                        {{ ucfirst($lostFound->status) }}
-                    </span>
-                    @if($lostFound->is_claimed)
-                        <span class="px-4 py-2 text-sm font-semibold bg-gray-100 text-gray-800 rounded-full">
-                            Sudah Diclaim
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                {{-- Photo Display --}}
+                @if($lostFound->photo)
+                    <div class="w-full h-96 overflow-hidden bg-gray-100">
+                        <img src="{{ asset('storage/' . $lostFound->photo) }}" alt="{{ $lostFound->item_name }}"
+                            class="w-full h-full object-contain">
+                    </div>
+                @endif
+
+                <div class="p-8">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span
+                            class="px-4 py-2 text-sm font-semibold rounded-full {{ $lostFound->status == 'hilang' ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
+                            {{ ucfirst($lostFound->status) }}
                         </span>
-                    @endif
-                </div>
-
-                <h1 class="text-3xl font-bold mb-6">{{ $lostFound->item_name }}</h1>
-
-                <div class="bg-gray-50 p-6 rounded-lg mb-6 grid grid-cols-2 gap-4">
-                    <div>
-                        <p class="text-sm text-gray-600">Kategori</p>
-                        <p class="font-semibold">{{ $lostFound->category ?? '-' }}</p>
+                        @if($lostFound->is_claimed)
+                            <span class="px-4 py-2 text-sm font-semibold bg-gray-100 text-gray-800 rounded-full">
+                                Sudah Diclaim
+                            </span>
+                        @endif
                     </div>
-                    <div>
-                        <p class="text-sm text-gray-600">Lokasi Ditemukan</p>
-                        <p class="font-semibold">{{ $lostFound->location_found ?? '-' }}</p>
+
+                    <h1 class="text-3xl font-bold mb-6">{{ $lostFound->item_name }}</h1>
+
+                    <div class="bg-gray-50 p-6 rounded-lg mb-6 grid grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-sm text-gray-600">Kategori</p>
+                            <p class="font-semibold">{{ $lostFound->category ?? '-' }}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Lokasi Ditemukan</p>
+                            <p class="font-semibold">{{ $lostFound->location_found ?? '-' }}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Tanggal</p>
+                            <p class="font-semibold">
+                                {{ $lostFound->date_found ? $lostFound->date_found->format('d M Y') : '-' }}
+                            </p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Kontak</p>
+                            <p class="font-semibold">{{ $lostFound->contact_person }}</p>
+                        </div>
                     </div>
-                    <div>
-                        <p class="text-sm text-gray-600">Tanggal</p>
-                        <p class="font-semibold">
-                            {{ $lostFound->date_found ? $lostFound->date_found->format('d M Y') : '-' }}
+
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold mb-3">Deskripsi</h3>
+                        <p class="text-gray-700 whitespace-pre-line">{{ $lostFound->description }}</p>
+                    </div>
+
+                    <div class="bg-blue-50 p-4 rounded-lg mb-6">
+                        <p class="text-sm">
+                            <strong>Dilaporkan oleh:</strong> {{ $lostFound->user->name }}
                         </p>
                     </div>
-                    <div>
-                        <p class="text-sm text-gray-600">Kontak</p>
-                        <p class="font-semibold">{{ $lostFound->contact_person }}</p>
+
+                    <div class="mt-6">
+                        <a href="{{ route('lost-found.index') }}"
+                            class="inline-block bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600">
+                            ← Kembali
+                        </a>
                     </div>
-                </div>
-
-                <div class="mb-6">
-                    <h3 class="text-xl font-bold mb-3">Deskripsi</h3>
-                    <p class="text-gray-700 whitespace-pre-line">{{ $lostFound->description }}</p>
-                </div>
-
-                <div class="bg-blue-50 p-4 rounded-lg mb-6">
-                    <p class="text-sm">
-                        <strong>Dilaporkan oleh:</strong> {{ $lostFound->user->name }}
-                    </p>
-                </div>
-
-                <div class="mt-6">
-                    <a href="{{ route('lost-found.index') }}"
-                        class="inline-block bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600">
-                        ← Kembali
-                    </a>
                 </div>
             </div>
         </div>
-    </div>
 </x-app-layout>

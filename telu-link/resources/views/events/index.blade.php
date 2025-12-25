@@ -5,7 +5,8 @@
                 Event Kampus
             </h2>
             @if(Auth::user()->isAdmin())
-                <a href="{{ route('events.create') }}" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+                <a href="{{ route('events.create') }}"
+                    class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
                     + Tambah Event
                 </a>
             @endif
@@ -49,10 +50,10 @@
                             <div class="flex items-center justify-between mb-3">
                                 <span
                                     class="px-3 py-1 text-xs font-semibold rounded-full 
-                                                                                {{ $event->category == 'seminar' ? 'bg-blue-100 text-blue-800' : '' }}
-                                                                                {{ $event->category == 'workshop' ? 'bg-green-100 text-green-800' : '' }}
-                                                                                {{ $event->category == 'kompetisi' ? 'bg-red-100 text-red-800' : '' }}
-                                                                                {{ $event->category == 'lainnya' ? 'bg-gray-100 text-gray-800' : '' }}">
+                                                                                        {{ $event->category == 'seminar' ? 'bg-blue-100 text-blue-800' : '' }}
+                                                                                        {{ $event->category == 'workshop' ? 'bg-green-100 text-green-800' : '' }}
+                                                                                        {{ $event->category == 'kompetisi' ? 'bg-red-100 text-red-800' : '' }}
+                                                                                        {{ $event->category == 'lainnya' ? 'bg-gray-100 text-gray-800' : '' }}">
                                     {{ ucfirst($event->category) }}
                                 </span>
                                 @if($event->event_date > now())
@@ -84,7 +85,7 @@
                             </div>
                             <div class="mt-4">
                                 <a href="{{ route('events.show', $event) }}"
-                                    class="block text-center bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+                                    class="block text-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
                                     Lihat Detail
                                 </a>
                             </div>

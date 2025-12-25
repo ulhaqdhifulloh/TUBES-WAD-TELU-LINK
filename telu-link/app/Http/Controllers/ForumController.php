@@ -74,6 +74,9 @@ class ForumController extends Controller
             'content' => 'required|string',
         ]);
 
+        // Handle is_solved checkbox
+        $validated['is_solved'] = $request->has('is_solved') ? true : false;
+
         $forum->update($validated);
 
         return redirect()->route('forum.show', $forum)->with('success', 'Pertanyaan berhasil diupdate!');
@@ -89,5 +92,52 @@ class ForumController extends Controller
         $forum->delete();
 
         return redirect()->route('forum.index')->with('success', 'Pertanyaan berhasil dihapus!');
+    }
+
+    // Answer Methods
+    public function storeAnswer(Request $request, ForumQuestion $forum)
+    {
+        $validated = $request->validate([
+            'content' => 'required|string',
+        ]);
+
+        $forum->answers()->create([
+            'content' => $validated['content'],
+            'user_id' => auth()->id(),
+        ]);
+
+        return redirect()->route('forum.show', $forum)->with('success', 'Jawaban berhasil ditambahkan!');
+    }
+
+    public function updateAnswer(Request $request, ForumQuestion $forum, $answerId)
+    {
+        $answer = $forum->answers()->findOrFail($answerId);
+
+        // Only owner can update
+        if ($answer->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'content' => 'required|string',
+        ]);
+
+        $answer->update($validated);
+
+        return redirect()->route('forum.show', $forum)->with('success', 'Jawaban berhasil diupdate!');
+    }
+
+    public function destroyAnswer(ForumQuestion $forum, $answerId)
+    {
+        $answer = $forum->answers()->findOrFail($answerId);
+
+        // Owner or admin can delete
+        if ($answer->user_id !== auth()->id() && !auth()->user()->isAdmin()) {
+            abort(403);
+        }
+
+        $answer->delete();
+
+        return redirect()->route('forum.show', $forum)->with('success', 'Jawaban berhasil dihapus!');
     }
 }

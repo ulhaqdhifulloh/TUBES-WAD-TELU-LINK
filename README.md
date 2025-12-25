@@ -6,11 +6,11 @@
 
 ### Fitur Utama
 
-1. **Event Kampus** - Informasi lengkap tentang seminar, workshop, kompetisi, dan acara kampus lainnya (PJ: Dhifulloh)
-2. **Info Akademik & Beasiswa** - Database beasiswa dan kompetisi nasional/internasional (PJ: Dhifulloh)
-3. **Lost & Found** - Sistem pelaporan barang hilang dan ditemukan di kampus (PJ: Sidik)
-4. **Berita & Organisasi** - Portal berita kegiatan UKM, Himpunan, dan BEM (PJ: Dea)
-5. **Forum Diskusi** - Platform tanya jawab mahasiswa dengan fitur "Solved" (PJ: Kresna)
+1. **Event Kampus** - Informasi lengkap tentang seminar, workshop, kompetisi, dan acara kampus lainnya 
+2. **Info Akademik & Beasiswa** - Database beasiswa dan kompetisi nasional/internasional 
+3. **Lost & Found** - Sistem pelaporan barang hilang dan ditemukan di kampus 
+4. **Berita & Organisasi** - Portal berita kegiatan UKM, Himpunan, dan BEM 
+5. **Forum Diskusi** - Platform tanya jawab mahasiswa dengan fitur "Solved"
 
 ---
 
@@ -40,7 +40,7 @@ Sebelum instalasi, pastikan sudah terinstall:
 
 ### 1. Clone Repository
 ```bash
-cd E:\Folder Kuliah\Semester 7\WAD\TUBES\TUBES-WAD-TELU-LINK
+cd ..\TUBES-WAD-TELU-LINK
 cd telu-link
 ```
 
@@ -112,11 +112,12 @@ Aplikasi akan berjalan di: `http://127.0.0.1:8000`
 - **Password**: `password`
 - **Nama**: Admin TelU
 - **Capabilities**: 
-  - CRUD Event Kampus
-  - CRUD Info Akademik & Beasiswa
-  - CRUD Berita & Organisasi
-  - Delete semua Lost & Found
-  - Delete semua Forum posts
+  - Full CRUD untuk Event Kampus
+  - Full CRUD untuk Info Akademik & Beasiswa
+  - Full CRUD untuk Berita & Organisasi
+  - Delete semua Lost & Found items (tidak bisa edit)
+  - Delete semua Forum questions & answers (tidak bisa edit)
+  - Register new user accounts (via Registration menu)
 
 ### Mahasiswa (Limited Access)
 **Sidik Indra Prayoga**
@@ -133,10 +134,12 @@ Aplikasi akan berjalan di: `http://127.0.0.1:8000`
 - **Password**: `password`
 
 **Note**: 
-- New users can be registered ONLY by admin
-- All users can view: Events, Academic Info, News
-- All users can fully manage: Lost & Found (own posts), Forum (own posts)
+- New users can be registered ONLY by admin through "Registration" menu
+- All users can view: Events, Academic Info, News, Organizations
+- All users can fully manage their own posts: Lost & Found, Forum (create, edit, delete)
+- All users can answer/comment on any forum questions
 - Only admin can create/edit/delete: Events, Academic Info, News
+- Admin can delete (but not edit) any Lost & Found items and Forum posts
 
 ---
 
@@ -357,26 +360,22 @@ php artisan view:clear
 ## 📝 Catatan Penting
 
 1. **Data Seeder**: Semua data dummy menggunakan konteks Telkom University (lokasi GKU, FIF, Bangkit, dll) dan nama Indonesia
-2. **Authentication**: Menggunakan Laravel Breeze default dengan tambahan field role, NIM, jurusan
-3. **Authorization**: Belum implement middleware untuk memisahkan akses admin/mahasiswa di semua fitur (masih basic auth)
-4. **File Upload**: Backend siap untuk upload gambar (poster_image, logo, dll) tapi form view belum implement upload
-5. **Responsive Design**: Dashboard sudah responsive, tapi detail pages perlu penyesuaian lebih lanjut
-6. **API**: Belum ada REST API, murni server-side rendering dengan Blade
-
----
-
-## 🚀 Pengembangan Selanjutnya
-
-Fitur yang bisa ditambahkan:
-- [ ] Implementasi upload gambar untuk poster event dan logo organisasi
-- [ ] Middleware role-based access control yang lebih ketat
-- [ ] Notification system untuk event registration
-- [ ] Advanced search & filter di semua modul
-- [ ] Dashboard analytics untuk admin
-- [ ] Export data ke PDF/Excel
-- [ ] Integration dengan API kampus (jika ada)
-- [ ] Real-time chat untuk Forum
-- [ ] Email verification untuk registrasi
+2. **Authentication**: Menggunakan Laravel Breeze dengan role-based authorization (admin/mahasiswa)
+3. **Authorization**: 
+   - Admin: Full CRUD untuk Events, Academic Info, News
+   - Mahasiswa: Full CRUD untuk Lost & Found (own posts), Forum (own posts)
+   - Admin dapat delete semua forum answers dan lost & found items
+4. **File Upload**: 
+   - Lost & Found: Foto barang (optional)
+   - Profile: Foto profil (optional)
+   - Storage symlink sudah dibuat otomatis
+5. **API Integration**: Public Holiday API Indonesia untuk menampilkan tanggal merah di dashboard
+6. **Forum Features**:
+   - Semua user bisa bertanya dan menjawab
+   - Owner bisa mark pertanyaan sebagai "Solved"
+   - Inline edit untuk answer (Alpine.js)
+   - Owner bisa edit/delete jawaban sendiri
+   - Admin bisa delete semua jawaban
 
 ---
 
@@ -384,7 +383,16 @@ Fitur yang bisa ditambahkan:
 
 **Developed for**: Telkom University - Web Application Development Course
 
-**Tech Stack**: Laravel 11, Blade, Tailwind CSS, MySQL
+**Tech Stack**: Laravel 11, Blade Templates, Tailwind CSS, Alpine.js, MySQL
+
+**Features**:
+- ✅ Complete CRUD for all 5 modules
+- ✅ Role-based authorization (Admin/Mahasiswa)  
+- ✅ File upload (Lost & Found photos, Profile photos)
+- ✅ API Integration (Indonesia Public Holidays)
+- ✅ Responsive design
+- ✅ Real-time notifications
+- ✅ Security best practices (APP_KEY, .gitignore)
 
 **Year**: 2025
 

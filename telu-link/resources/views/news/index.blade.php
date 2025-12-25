@@ -6,7 +6,7 @@
             </h2>
             @if(Auth::user()->isAdmin())
                 <a href="{{ route('news.create') }}"
-                    class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">
+                    class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
                     + Tambah Berita
                 </a>
             @endif
@@ -37,7 +37,7 @@
                                 <div class="flex items-center justify-between">
                                     <p class="text-sm text-gray-500">Oleh: {{ $article->author->name }}</p>
                                     <a href="{{ route('news.show', $article) }}"
-                                        class="text-red-600 hover:text-red-800 font-semibold">
+                                        class="text-blue-600 hover:text-blue-800 font-semibold">
                                         Baca Selengkapnya →
                                     </a>
                                 </div>

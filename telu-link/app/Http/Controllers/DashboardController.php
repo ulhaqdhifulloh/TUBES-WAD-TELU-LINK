@@ -37,11 +37,30 @@ class DashboardController extends Controller
             ->limit(3)
             ->get();
 
+        // Fetch Indonesian Public Holidays from API
+        $publicHolidays = [];
+        try {
+            $response = \Http::timeout(5)->get('https://date.nager.at/api/v3/PublicHolidays/' . date('Y') . '/ID');
+            if ($response->successful()) {
+                $publicHolidays = collect($response->json())
+                    ->filter(function ($holiday) {
+                        // Only show upcoming and current month holidays
+                        return Carbon::parse($holiday['date'])->gte(Carbon::now()->startOfMonth());
+                    })
+                    ->take(5)
+                    ->toArray();
+            }
+        } catch (\Exception $e) {
+            // API call failed, continue without holidays
+            \Log::warning('Failed to fetch public holidays: ' . $e->getMessage());
+        }
+
         return view('dashboard', compact(
             'upcomingEvents',
             'latestNews',
             'recentQuestions',
-            'upcomingDeadlines'
+            'upcomingDeadlines',
+            'publicHolidays'
         ));
     }
 }

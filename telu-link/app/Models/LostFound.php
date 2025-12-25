@@ -23,7 +23,7 @@ class LostFound extends Model
     ];
 
     protected $casts = [
-        'found_date' => 'date',
+        'date_found' => 'date',
         'is_claimed' => 'boolean',
     ];
 

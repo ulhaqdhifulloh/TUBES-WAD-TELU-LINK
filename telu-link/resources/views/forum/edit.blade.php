@@ -45,6 +45,19 @@
                         @enderror
                     </div>
 
+                    <!-- Status Solved/Open Toggle -->
+                    <div class="mb-6">
+                        <label class="flex items-center">
+                            <input type="checkbox" name="is_solved" value="1" {{ $forum->is_solved ? 'checked' : '' }}
+                                class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500">
+                            <span class="ml-2 text-sm text-gray-700">
+                                <strong>Tandai sebagai Solved</strong> - Centang jika pertanyaan ini sudah terjawab
+                            </span>
+                        </label>
+                        <p class="text-xs text-gray-500 mt-1">Status ini akan ditampilkan sebagai badge pada pertanyaan
+                            Anda</p>
+                    </div>
+
                     <div class="flex gap-4">
                         <button type="submit"
                             class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold">

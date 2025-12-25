@@ -73,6 +73,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Forum Routes - All auth users can CRUD their own
     Route::resource('forum', ForumController::class);
+
+    // Forum Answer Routes - nested under forum questions
+    Route::post('/forum/{forum}/answers', [ForumController::class, 'storeAnswer'])->name('forum.answers.store');
+    Route::put('/forum/{forum}/answers/{answer}', [ForumController::class, 'updateAnswer'])->name('forum.answers.update');
+    Route::delete('/forum/{forum}/answers/{answer}', [ForumController::class, 'destroyAnswer'])->name('forum.answers.destroy');
 });
 
 require __DIR__ . '/auth.php';

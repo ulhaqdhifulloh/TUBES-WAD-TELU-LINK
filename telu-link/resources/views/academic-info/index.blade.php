@@ -6,7 +6,7 @@
             </h2>
             @if(Auth::user()->isAdmin())
                 <a href="{{ route('academic-info.create') }}"
-                    class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                    class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
                     + Tambah Info
                 </a>
             @endif
@@ -18,7 +18,7 @@
             {{-- Tabs --}}
             <div class="flex gap-4 mb-6">
                 <a href="{{ route('academic-info.index') }}"
-                    class="px-6 py-3 rounded-lg shadow-md transition {{ !request('type') ? 'bg-red-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
+                    class="px-6 py-3 rounded-lg shadow-md transition {{ !request('type') ? 'bg-gray-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
                     Semua
                 </a>
                 <a href="{{ route('academic-info.index', ['type' => 'beasiswa']) }}"
@@ -47,7 +47,7 @@
                                     @endphp
                                     <span
                                         class="px-3 py-1 text-xs font-semibold rounded-full
-                                                    {{ $daysLeft < 7 ? 'bg-red-100 text-red-800' : ($daysLeft < 30 ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800') }}">
+                                                                {{ $daysLeft < 7 ? 'bg-red-100 text-red-800' : ($daysLeft < 30 ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800') }}">
                                         @if($daysLeft < 0)
                                             Sudah Ditutup
                                         @else

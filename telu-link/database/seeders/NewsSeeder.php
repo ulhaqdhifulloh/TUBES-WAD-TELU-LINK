@@ -12,8 +12,16 @@ class NewsSeeder extends Seeder
 {
     public function run(): void
     {
+        // Get admin user - only admin can create news
+        $admin = User::where('email', 'admin@telkomuniversity.ac.id')->first();
+
+        if (!$admin) {
+            $this->command->error('Admin user not found! Run UserSeeder first.');
+            return;
+        }
+
         $organizations = Organization::all();
-        $users = User::where('role', 'admin')->orWhere('role', 'mahasiswa')->limit(5)->get();
+        // $users = User::where('role', 'admin')->orWhere('role', 'mahasiswa')->limit(5)->get(); // Removed as per instruction
 
         $newsArticles = [
             [
@@ -88,9 +96,9 @@ class NewsSeeder extends Seeder
             ],
         ];
 
-        foreach ($newsArticles as $index => $article) {
-            $user = $users[$index % $users->count()];
-            News::create(array_merge($article, ['author_id' => $user->id]));
+        // Create all news with admin as author
+        foreach ($newsArticles as $article) {
+            News::create(array_merge($article, ['author_id' => $admin->id]));
         }
     }
 }
